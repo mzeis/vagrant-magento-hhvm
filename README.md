@@ -27,6 +27,7 @@ Usage
 4. Execute `/var/vagrant/shell/install-hhvm.sh`. This will take a while as > 350 MB are downloaded and HHVM is compiled which can take anywhere from 30 minutes to several hours.
 5. If everything worked then you will get a running Apache instance and can open `http://magento-hhvm.local/` in your browser.
 6. To use HHVM instead of Apache shut down Apache and launch HHVM:
+
          sudo /etc/init.d/apache2 stop
          sudo /home/vagrant/dev/hhvm/hphp/hhvm/hhvm -m server -c /var/vagrant/files/magento-config.hdf -vServer.IniFile=/var/vagrant/files/hhvm.ini
 7. If you reload `http://magento-hhvm.local/` HHVM should be at duty and boosting your store as soon as the JIT compiler kicks in.
