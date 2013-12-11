@@ -37,7 +37,7 @@ What if I...
 
 ### want to change credentials?
 * Edit `puppet/hieradata/common.yaml` and `shell/install-hhvm.sh` for changing MySQL credentials.
-* Modify the `n98-magerun.phar` to change Magento credentials as specified in the [n98a-magerun Wiki](https://github.com/netz98/n98-magerun/wiki/Magento-installer).
+* Modify the `n98-magerun.phar` to change Magento credentials as specified in the [n98-magerun Wiki](https://github.com/netz98/n98-magerun/wiki/Magento-installer).
 
 ### want to use NFS for the shared folder?
 * Edit `Vagrantfile`.
