@@ -11,10 +11,10 @@ Vagrant.configure("2") do |config|
   config.vm.provider :virtualbox do |virtualbox|
     virtualbox.customize ["modifyvm", :id, "--name", "magento-hhvm"]
     virtualbox.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
-    # virtualbox.customize ["modifyvm", :id, "--memory", "1024"]
-    virtualbox.customize ["modifyvm", :id, "--memory", "2048"]
-    virtualbox.customize ["modifyvm", :id, "--cpus", "2"]
-    virtualbox.customize ["modifyvm", :id, "--ioapic", "on"]
+    virtualbox.customize ["modifyvm", :id, "--memory", "1024"]
+    #virtualbox.customize ["modifyvm", :id, "--memory", "2048"]
+    #virtualbox.customize ["modifyvm", :id, "--cpus", "2"]
+    #virtualbox.customize ["modifyvm", :id, "--ioapic", "on"]
     virtualbox.customize ["setextradata", :id, "--VBoxInternal2/SharedFoldersEnableSymlinksCreate/v-root", "1"]
   end
 
