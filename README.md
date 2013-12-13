@@ -35,6 +35,35 @@ Usage
          sudo /home/vagrant/dev/hhvm/hphp/hhvm/hhvm -m server -c /var/vagrant/files/magento-config.hdf -vServer.IniFile=/var/vagrant/files/hhvm.ini
 7. If you reload `http://magento-hhvm.local/` HHVM should be at duty and boosting your store as soon as the JIT compiler kicks in.
 
+Default credentials
+-------------------
+
+By default, these credentials are used:
+
+### SSH
+
+IP: 127.0.0.1
+
+Port: 2222
+
+User: vagrant
+
+Password: vagrant
+
+### MySQL
+
+Database name: magento
+
+User: magentouser
+
+Password: magentopwd
+
+### Magento Admin User
+
+User: admin
+
+Password: password123
+
 What if I...
 ------------
 
