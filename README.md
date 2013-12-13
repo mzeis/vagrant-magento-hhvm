@@ -25,8 +25,11 @@ Usage
 2. Change to the directory and execute `vagrant up`
 3. SSH into your VM (execute `vagrant ssh` or if this doesn't work connect to 127.0.0.1:2222 as printed on screen)
 4. Execute `/var/vagrant/shell/install-hhvm.sh`. This will take a while as > 350 MB are downloaded and HHVM is compiled which can take anywhere from 30 minutes to several hours.
-5. If everything worked then you will get a running Apache instance and can open `http://magento-hhvm.local/` in your browser.
-6. To use HHVM instead of Apache shut down Apache and launch HHVM:
+5. Add a host entry to your hosts file:
+
+         192.168.56.101 magento-hhvm.local
+6. If everything worked then you will get a running Apache instance and can open `http://magento-hhvm.local/` in your browser.
+7. To use HHVM instead of Apache shut down Apache and launch HHVM:
 
          sudo /etc/init.d/apache2 stop
          sudo /home/vagrant/dev/hhvm/hphp/hhvm/hhvm -m server -c /var/vagrant/files/magento-config.hdf -vServer.IniFile=/var/vagrant/files/hhvm.ini
