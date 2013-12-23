@@ -103,6 +103,7 @@ function install_magento()
     n98-magerun.phar install --dbHost="localhost" --dbUser="magentouser" --dbPass="magentopwd" --dbName="magento" --installSampleData=yes --useDefaultConfigParams=yes --magentoVersionByName="magento-ce-1.8.0.0" --installationFolder="magento-hhvm" --baseUrl="http://magento-hhvm.local/"
     cd magento-hhvm/
     modman init
+    n98-magerun.phar dev:symlinks --on --global
     cd ~/dev
     return 0
 }
