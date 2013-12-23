@@ -17,7 +17,7 @@ function get_hhvm()
     cd ~
     mkdir dev
     cd dev
-    git clone https://github.com/danslo/hhvm -b simplexml-refactor
+    git clone https://github.com/danslo/hhvm
     export CMAKE_PREFIX_PATH=`pwd`
     cd hhvm
     git submodule init
