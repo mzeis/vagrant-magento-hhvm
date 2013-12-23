@@ -84,6 +84,16 @@ function install_n98_magerun()
 }
 
 #####################
+## Install modman
+
+function install_modman()
+{
+    bash < <(wget -O - https://raw.github.com/colinmollenhour/modman/master/modman-installer)
+    source ~/.profile
+    return 0
+}
+
+#####################
 ## Install Magento
 
 function install_magento()
@@ -91,7 +101,9 @@ function install_magento()
     cd /var/www/
     sudo chmod 777 /var/www/magento-hhvm/
     n98-magerun.phar install --dbHost="localhost" --dbUser="magentouser" --dbPass="magentopwd" --dbName="magento" --installSampleData=yes --useDefaultConfigParams=yes --magentoVersionByName="magento-ce-1.8.0.0" --installationFolder="magento-hhvm" --baseUrl="http://magento-hhvm.local/"
-    cd -
+    cd magento-hhvm/
+    modman init
+    cd ~/dev
     return 0
 }
 
@@ -122,6 +134,7 @@ build_libevent
 build_google_glog
 build_hhvm
 install_n98_magerun
+install_modman
 install_magento
 # stop_apache
 # start_hhvm
