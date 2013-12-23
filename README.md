@@ -2,6 +2,10 @@ Vagrant for Magento on HHVM
 =====================
 This is a Vagrant configuration for getting a basic version of Magento with HHVM up and running. It is based on a template by [PuPHPet](https://puphpet.com/).
 
+Version
+-------
+1.1.0
+
 What do you get?
 -------------------------
 A VirtualBox image
@@ -12,10 +16,11 @@ A VirtualBox image
 including
 
 * Apache
-* PHP 5.4
+* PHP 5.5 (Opcache enabled with default configuration)
 * MySQL
 * HHVM (Daniel Sloof's patched version)
 * n98-magerun
+* modman
 * Magento CE 1.8 installed by n98-magerun
 
 Usage
@@ -80,6 +85,19 @@ What if I...
 Contribution
 ------------
 Any contribution is highly appreciated. The best way to contribute code is to open a [pull request on GitHub](https://help.github.com/articles/using-pull-requests).
+
+Changelog
+---------
+
+### v1.1.0
+* HHVM based on master branch by Daniel Sloof (#1)
+* Switched to PHP 5.5 with Opcache enabled (default configuration (#2)
+* Adjusted manifest for Puppet 3.4 (see [puphpet/issues#347](https://github.com/puphpet/puphpet/issues/347))
+* Install modman
+* Allow symlinks for templates
+
+### v1.0.0
+* Initial release
 
 Developer
 ---------
