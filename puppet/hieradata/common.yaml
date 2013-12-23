@@ -66,15 +66,15 @@ apache:
     default_vhost: true
     mpm_module: prefork
 php:
-    version: '54'
+    version: '55'
     composer: '1'
     modules:
         php:
             - cli
+            - curl
+            - gd
             - intl
             - mcrypt
-            - gd
-            - curl
         pear: {  }
         pecl:
             - pecl_http
