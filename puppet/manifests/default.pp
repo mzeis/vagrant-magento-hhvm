@@ -256,7 +256,8 @@ if is_hash($apache_values) {
   include apache::params
 
   $php_webserver_service = 'httpd'
-  $php_webserver_user = $apache::params::user
+  $php_webserver_user    = $apache::params::user
+  $php_webserver_restart = true
 
   class { 'php':
     service => $php_webserver_service
@@ -265,7 +266,8 @@ if is_hash($apache_values) {
   include nginx::params
 
   $php_webserver_service = "${php_prefix}fpm"
-  $php_webserver_user = $nginx::params::nx_daemon_user
+  $php_webserver_user    = $nginx::params::nx_daemon_user
+  $php_webserver_restart = true
 
   class { 'php':
     package             => $php_webserver_service,
@@ -281,6 +283,15 @@ if is_hash($apache_values) {
     hasstatus  => true,
     require    => Package[$php_webserver_service]
   }
+} else {
+  $php_webserver_service = undef
+  $php_webserver_restart = false
+
+  class { 'php':
+    package             => "${php_prefix}cli",
+    service             => $php_webserver_service,
+    service_autorestart => false,
+  }
 }
 
 class { 'php::devel': }
@@ -295,7 +306,7 @@ if count($php_values['modules']['pecl']) > 0 {
   php_pecl_mod { $php_values['modules']['pecl']:; }
 }
 if count($php_values['ini']) > 0 {
-  $php_values['ini'].each { |$key, $value|
+  each( $php_values['ini'] ) |$key, $value| {
     puphpet::ini { $key:
       entry       => "CUSTOM/${key}",
       value       => $value,
@@ -326,13 +337,21 @@ puphpet::ini { $key:
 }
 
 define php_mod {
-  php::module { $name: }
+  php::module { $name:
+    service_autorestart => $php_webserver_restart,
+  }
 }
 define php_pear_mod {
-  php::pear::module { $name: use_package => false }
+  php::pear::module { $name:
+    use_package         => false,
+    service_autorestart => $php_webserver_restart,
+  }
 }
 define php_pecl_mod {
-  php::pecl::module { $name: use_package => false }
+  php::pecl::module { $name:
+    use_package         => false,
+    service_autorestart => $php_webserver_restart,
+  }
 }
 
 if $php_values['composer'] == 1 {
@@ -347,6 +366,8 @@ if $php_values['composer'] == 1 {
     suhosin_enabled => false,
   }
 }
+
+## Begin Xdebug manifest
 
 if $xdebug_values == undef {
   $xdebug_values = hiera('xdebug', false)
@@ -366,7 +387,7 @@ if $xdebug_values['install'] != undef and $xdebug_values['install'] == 1 {
   }
 
   if is_hash($xdebug_values['settings']) and count($xdebug_values['settings']) > 0 {
-    $xdebug_values['settings'].each { |$key, $value|
+    each( $xdebug_values['settings'] ) |$key, $value| {
       puphpet::ini { $key:
         entry       => "XDEBUG/${key}",
         value       => $value,
@@ -395,6 +416,12 @@ if $nginx_values == undef {
   $nginx_values = hiera('nginx', false)
 }
 
+if is_hash($apache_values) or is_hash($nginx_values) {
+  $mysql_webserver_restart = true
+} else {
+  $mysql_webserver_restart = false
+}
+
 if $mysql_values['root_password'] {
   class { 'mysql::server':
     root_password => $mysql_values['root_password'],
@@ -406,9 +433,13 @@ if $mysql_values['root_password'] {
 
   if is_hash($php_values) {
     if $::osfamily == 'redhat' and $php_values['version'] == '53' and ! defined(Php::Module['mysql']) {
-      php::module { 'mysql': }
+      php::module { 'mysql':
+        service_autorestart => $mysql_webserver_restart,
+      }
     } elsif ! defined(Php::Module['mysqlnd']) {
-      php::module { 'mysqlnd': }
+      php::module { 'mysqlnd':
+        service_autorestart => $mysql_webserver_restart,
+      }
     }
   }
 }
